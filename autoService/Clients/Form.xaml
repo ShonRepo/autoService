@@ -1,0 +1,35 @@
+﻿<Window x:Class="autoService.Clients.Form"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:autoService.Clients"
+        mc:Ignorable="d"
+        Title="Клиент" Height="450" Width="400" Background="Black">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="0.5*"/>
+            <RowDefinition Height="4*"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Label>Клиент</Label>
+        <StackPanel Grid.Row="1">
+            <TextBlock>Имя</TextBlock>
+            <TextBox x:Name="FirstName"></TextBox>
+            <TextBlock>Фамилия</TextBlock>
+            <TextBox x:Name="LastName"></TextBox>
+            <TextBlock>Номер</TextBlock>
+            <TextBox x:Name="Phone"></TextBox>
+            <TextBlock>Email</TextBlock>
+            <TextBox x:Name="Email"></TextBox>
+        </StackPanel>
+        <Grid Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Button IsDefault="True" Click="Add">Сохранить</Button>
+            <Button Grid.Column="1" IsCancel="True">Отмена</Button>
+        </Grid>
+    </Grid>
+</Window>

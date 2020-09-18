@@ -1,0 +1,265 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="autoServiceModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityContainer Name="autoServiceEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Amenities" EntityType="autoServiceModel.Amenities" />
+    <EntitySet Name="AmenitiesOrder" EntityType="autoServiceModel.AmenitiesOrder" />
+    <EntitySet Name="Client" EntityType="autoServiceModel.Client" />
+    <EntitySet Name="component" EntityType="autoServiceModel.component" />
+    <EntitySet Name="Manager" EntityType="autoServiceModel.Manager" />
+    <EntitySet Name="Order" EntityType="autoServiceModel.Order" />
+    <EntitySet Name="Provider" EntityType="autoServiceModel.Provider" />
+    <EntitySet Name="sysdiagrams" EntityType="autoServiceModel.sysdiagrams" />
+    <EntitySet Name="Type" EntityType="autoServiceModel.Type" />
+    <EntitySet Name="Warehouse" EntityType="autoServiceModel.Warehouse" />
+    <AssociationSet Name="FK_AmenitiesOrder_Amenities" Association="autoServiceModel.FK_AmenitiesOrder_Amenities">
+      <End Role="Amenities" EntitySet="Amenities" />
+      <End Role="AmenitiesOrder" EntitySet="AmenitiesOrder" />
+    </AssociationSet>
+    <AssociationSet Name="FK_AmenitiesOrder_Order" Association="autoServiceModel.FK_AmenitiesOrder_Order">
+      <End Role="Order" EntitySet="Order" />
+      <End Role="AmenitiesOrder" EntitySet="AmenitiesOrder" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Order_Client" Association="autoServiceModel.FK_Order_Client">
+      <End Role="Client" EntitySet="Client" />
+      <End Role="Order" EntitySet="Order" />
+    </AssociationSet>
+    <AssociationSet Name="FK_component_Order" Association="autoServiceModel.FK_component_Order">
+      <End Role="Order" EntitySet="Order" />
+      <End Role="component" EntitySet="component" />
+    </AssociationSet>
+    <AssociationSet Name="FK_component_Provider" Association="autoServiceModel.FK_component_Provider">
+      <End Role="Provider" EntitySet="Provider" />
+      <End Role="component" EntitySet="component" />
+    </AssociationSet>
+    <AssociationSet Name="FK_component_Type" Association="autoServiceModel.FK_component_Type">
+      <End Role="Type" EntitySet="Type" />
+      <End Role="component" EntitySet="component" />
+    </AssociationSet>
+    <AssociationSet Name="FK_component_Warehouse" Association="autoServiceModel.FK_component_Warehouse">
+      <End Role="Warehouse" EntitySet="Warehouse" />
+      <End Role="component" EntitySet="component" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Order_Manager" Association="autoServiceModel.FK_Order_Manager">
+      <End Role="Manager" EntitySet="Manager" />
+      <End Role="Order" EntitySet="Order" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Amenities">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Price" Type="Decimal" Nullable="false" Precision="10" Scale="2" />
+    <NavigationProperty Name="AmenitiesOrder" Relationship="autoServiceModel.FK_AmenitiesOrder_Amenities" FromRole="Amenities" ToRole="AmenitiesOrder" />
+  </EntityType>
+  <EntityType Name="AmenitiesOrder">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Amenities" Type="Int64" Nullable="false" />
+    <Property Name="Order" Type="Int64" Nullable="false" />
+    <NavigationProperty Name="Amenities1" Relationship="autoServiceModel.FK_AmenitiesOrder_Amenities" FromRole="AmenitiesOrder" ToRole="Amenities" />
+    <NavigationProperty Name="Order1" Relationship="autoServiceModel.FK_AmenitiesOrder_Order" FromRole="AmenitiesOrder" ToRole="Order" />
+  </EntityType>
+  <EntityType Name="Client">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="FirstName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="LastName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Number" Type="String" Nullable="false" MaxLength="12" FixedLength="false" Unicode="true" />
+    <Property Name="Email" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Order" Relationship="autoServiceModel.FK_Order_Client" FromRole="Client" ToRole="Order" />
+  </EntityType>
+  <EntityType Name="component">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Type" Type="Int64" Nullable="false" />
+    <Property Name="Warehouse" Type="Int64" Nullable="false" />
+    <Property Name="DeliveryDate" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="Provider" Type="Int64" Nullable="false" />
+    <Property Name="Order" Type="Int64" />
+    <NavigationProperty Name="Order1" Relationship="autoServiceModel.FK_component_Order" FromRole="component" ToRole="Order" />
+    <NavigationProperty Name="Provider1" Relationship="autoServiceModel.FK_component_Provider" FromRole="component" ToRole="Provider" />
+    <NavigationProperty Name="Type1" Relationship="autoServiceModel.FK_component_Type" FromRole="component" ToRole="Type" />
+    <NavigationProperty Name="Warehouse1" Relationship="autoServiceModel.FK_component_Warehouse" FromRole="component" ToRole="Warehouse" />
+  </EntityType>
+  <EntityType Name="Manager">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="FirstName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="LastName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Phono" Type="Binary" MaxLength="Max" FixedLength="false" />
+    <Property Name="DateOfBirth" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="Login" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Password" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Order" Relationship="autoServiceModel.FK_Order_Manager" FromRole="Manager" ToRole="Order" />
+  </EntityType>
+  <EntityType Name="Order">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Client" Type="Int64" Nullable="false" />
+    <Property Name="Car" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Comment" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Manager" Type="Int64" Nullable="false" />
+    <NavigationProperty Name="AmenitiesOrder" Relationship="autoServiceModel.FK_AmenitiesOrder_Order" FromRole="Order" ToRole="AmenitiesOrder" />
+    <NavigationProperty Name="Client1" Relationship="autoServiceModel.FK_Order_Client" FromRole="Order" ToRole="Client" />
+    <NavigationProperty Name="component" Relationship="autoServiceModel.FK_component_Order" FromRole="Order" ToRole="component" />
+    <NavigationProperty Name="Manager1" Relationship="autoServiceModel.FK_Order_Manager" FromRole="Order" ToRole="Manager" />
+  </EntityType>
+  <EntityType Name="Provider">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Adress" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="component" Relationship="autoServiceModel.FK_component_Provider" FromRole="Provider" ToRole="component" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="principal_id" Type="Int32" Nullable="false" />
+    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="version" Type="Int32" />
+    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="Type">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Price" Type="Decimal" Precision="10" Scale="2" />
+    <NavigationProperty Name="component" Relationship="autoServiceModel.FK_component_Type" FromRole="Type" ToRole="component" />
+  </EntityType>
+  <EntityType Name="Warehouse">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Address" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="component" Relationship="autoServiceModel.FK_component_Warehouse" FromRole="Warehouse" ToRole="component" />
+  </EntityType>
+  <Association Name="FK_AmenitiesOrder_Amenities">
+    <End Type="autoServiceModel.Amenities" Role="Amenities" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Type="autoServiceModel.AmenitiesOrder" Role="AmenitiesOrder" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Amenities">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="AmenitiesOrder">
+        <PropertyRef Name="Amenities" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_AmenitiesOrder_Order">
+    <End Type="autoServiceModel.Order" Role="Order" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Type="autoServiceModel.AmenitiesOrder" Role="AmenitiesOrder" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Order">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="AmenitiesOrder">
+        <PropertyRef Name="Order" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Order_Client">
+    <End Type="autoServiceModel.Client" Role="Client" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Type="autoServiceModel.Order" Role="Order" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Client">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Order">
+        <PropertyRef Name="Client" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_component_Order">
+    <End Type="autoServiceModel.Order" Role="Order" Multiplicity="0..1" />
+    <End Type="autoServiceModel.component" Role="component" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Order">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="component">
+        <PropertyRef Name="Order" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_component_Provider">
+    <End Type="autoServiceModel.Provider" Role="Provider" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Type="autoServiceModel.component" Role="component" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Provider">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="component">
+        <PropertyRef Name="Provider" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_component_Type">
+    <End Type="autoServiceModel.Type" Role="Type" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Type="autoServiceModel.component" Role="component" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Type">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="component">
+        <PropertyRef Name="Type" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_component_Warehouse">
+    <End Type="autoServiceModel.Warehouse" Role="Warehouse" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Type="autoServiceModel.component" Role="component" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Warehouse">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="component">
+        <PropertyRef Name="Warehouse" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Order_Manager">
+    <End Type="autoServiceModel.Manager" Role="Manager" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Type="autoServiceModel.Order" Role="Order" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Manager">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Order">
+        <PropertyRef Name="Manager" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

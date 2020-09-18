@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="86f88065949b4d648b39421bd4216884" Name="Diagram1">
+        <EntityTypeShape EntityType="autoServiceModel.Amenities" Width="1.5" PointX="6" PointY="8" />
+        <EntityTypeShape EntityType="autoServiceModel.AmenitiesOrder" Width="1.5" PointX="8.25" PointY="3" />
+        <EntityTypeShape EntityType="autoServiceModel.Client" Width="1.5" PointX="0.75" PointY="2.875" />
+        <EntityTypeShape EntityType="autoServiceModel.component" Width="1.5" PointX="5.25" PointY="2.5" />
+        <EntityTypeShape EntityType="autoServiceModel.Manager" Width="1.5" PointX="0.75" PointY="7.625" />
+        <EntityTypeShape EntityType="autoServiceModel.Order" Width="1.5" PointX="3" PointY="2.625" />
+        <EntityTypeShape EntityType="autoServiceModel.Provider" Width="1.5" PointX="3" PointY="9" />
+        <EntityTypeShape EntityType="autoServiceModel.sysdiagrams" Width="1.5" PointX="8.75" PointY="5.75" />
+        <EntityTypeShape EntityType="autoServiceModel.Type" Width="1.5" PointX="3" PointY="6.5" />
+        <EntityTypeShape EntityType="autoServiceModel.Warehouse" Width="1.5" PointX="3" PointY="11.5" />
+        <AssociationConnector Association="autoServiceModel.FK_AmenitiesOrder_Amenities" />
+        <AssociationConnector Association="autoServiceModel.FK_AmenitiesOrder_Order" />
+        <AssociationConnector Association="autoServiceModel.FK_Order_Client" />
+        <AssociationConnector Association="autoServiceModel.FK_component_Order" />
+        <AssociationConnector Association="autoServiceModel.FK_component_Provider" />
+        <AssociationConnector Association="autoServiceModel.FK_component_Type" />
+        <AssociationConnector Association="autoServiceModel.FK_component_Warehouse" />
+        <AssociationConnector Association="autoServiceModel.FK_Order_Manager" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

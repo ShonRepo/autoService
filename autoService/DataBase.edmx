@@ -1,0 +1,651 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="Хранилище autoServiceModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Amenities">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Price" Type="decimal" Precision="10" Scale="2" Nullable="false" />
+        </EntityType>
+        <EntityType Name="AmenitiesOrder">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Amenities" Type="bigint" Nullable="false" />
+          <Property Name="Order" Type="bigint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Client">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FirstName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="LastName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Number" Type="nvarchar" MaxLength="12" Nullable="false" />
+          <Property Name="Email" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="component">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Type" Type="bigint" Nullable="false" />
+          <Property Name="Warehouse" Type="bigint" Nullable="false" />
+          <Property Name="DeliveryDate" Type="date" Nullable="false" />
+          <Property Name="Provider" Type="bigint" Nullable="false" />
+          <Property Name="Order" Type="bigint" />
+        </EntityType>
+        <EntityType Name="Manager">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FirstName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="LastName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Phono" Type="varbinary(max)" />
+          <Property Name="DateOfBirth" Type="date" Nullable="false" />
+          <Property Name="Login" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Password" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Order">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Client" Type="bigint" Nullable="false" />
+          <Property Name="Car" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Comment" Type="ntext" Nullable="false" />
+          <Property Name="Manager" Type="bigint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Provider">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Adress" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="Type">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Price" Type="decimal" Precision="10" Scale="2" />
+        </EntityType>
+        <EntityType Name="Warehouse">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Address" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_AmenitiesOrder_Amenities">
+          <End Role="Amenities" Type="Self.Amenities" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="AmenitiesOrder" Type="Self.AmenitiesOrder" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Amenities">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AmenitiesOrder">
+              <PropertyRef Name="Amenities" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AmenitiesOrder_Order">
+          <End Role="Order" Type="Self.Order" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="AmenitiesOrder" Type="Self.AmenitiesOrder" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Order">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AmenitiesOrder">
+              <PropertyRef Name="Order" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_component_Order">
+          <End Role="Order" Type="Self.Order" Multiplicity="0..1" />
+          <End Role="component" Type="Self.component" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Order">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="component">
+              <PropertyRef Name="Order" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_component_Provider">
+          <End Role="Provider" Type="Self.Provider" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="component" Type="Self.component" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Provider">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="component">
+              <PropertyRef Name="Provider" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_component_Type">
+          <End Role="Type" Type="Self.Type" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="component" Type="Self.component" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Type">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="component">
+              <PropertyRef Name="Type" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_component_Warehouse">
+          <End Role="Warehouse" Type="Self.Warehouse" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="component" Type="Self.component" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Warehouse">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="component">
+              <PropertyRef Name="Warehouse" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Order_Client">
+          <End Role="Client" Type="Self.Client" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Order" Type="Self.Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Client">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Order">
+              <PropertyRef Name="Client" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Order_Manager">
+          <End Role="Manager" Type="Self.Manager" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Order" Type="Self.Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Manager">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Order">
+              <PropertyRef Name="Manager" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Хранилище autoServiceModelContainer">
+          <EntitySet Name="Amenities" EntityType="Self.Amenities" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AmenitiesOrder" EntityType="Self.AmenitiesOrder" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Client" EntityType="Self.Client" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="component" EntityType="Self.component" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Manager" EntityType="Self.Manager" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Order" EntityType="Self.Order" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Provider" EntityType="Self.Provider" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Type" EntityType="Self.Type" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Warehouse" EntityType="Self.Warehouse" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_AmenitiesOrder_Amenities" Association="Self.FK_AmenitiesOrder_Amenities">
+            <End Role="Amenities" EntitySet="Amenities" />
+            <End Role="AmenitiesOrder" EntitySet="AmenitiesOrder" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AmenitiesOrder_Order" Association="Self.FK_AmenitiesOrder_Order">
+            <End Role="Order" EntitySet="Order" />
+            <End Role="AmenitiesOrder" EntitySet="AmenitiesOrder" />
+          </AssociationSet>
+          <AssociationSet Name="FK_component_Order" Association="Self.FK_component_Order">
+            <End Role="Order" EntitySet="Order" />
+            <End Role="component" EntitySet="component" />
+          </AssociationSet>
+          <AssociationSet Name="FK_component_Provider" Association="Self.FK_component_Provider">
+            <End Role="Provider" EntitySet="Provider" />
+            <End Role="component" EntitySet="component" />
+          </AssociationSet>
+          <AssociationSet Name="FK_component_Type" Association="Self.FK_component_Type">
+            <End Role="Type" EntitySet="Type" />
+            <End Role="component" EntitySet="component" />
+          </AssociationSet>
+          <AssociationSet Name="FK_component_Warehouse" Association="Self.FK_component_Warehouse">
+            <End Role="Warehouse" EntitySet="Warehouse" />
+            <End Role="component" EntitySet="component" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Order_Client" Association="Self.FK_Order_Client">
+            <End Role="Client" EntitySet="Client" />
+            <End Role="Order" EntitySet="Order" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Order_Manager" Association="Self.FK_Order_Manager">
+            <End Role="Manager" EntitySet="Manager" />
+            <End Role="Order" EntitySet="Order" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="autoServiceModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="autoServiceEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Amenities" EntityType="autoServiceModel.Amenities" />
+          <EntitySet Name="AmenitiesOrder" EntityType="autoServiceModel.AmenitiesOrder" />
+          <EntitySet Name="Client" EntityType="autoServiceModel.Client" />
+          <EntitySet Name="component" EntityType="autoServiceModel.component" />
+          <EntitySet Name="Manager" EntityType="autoServiceModel.Manager" />
+          <EntitySet Name="Order" EntityType="autoServiceModel.Order" />
+          <EntitySet Name="Provider" EntityType="autoServiceModel.Provider" />
+          <EntitySet Name="sysdiagrams" EntityType="autoServiceModel.sysdiagrams" />
+          <EntitySet Name="Type" EntityType="autoServiceModel.Type" />
+          <EntitySet Name="Warehouse" EntityType="autoServiceModel.Warehouse" />
+          <AssociationSet Name="FK_AmenitiesOrder_Amenities" Association="autoServiceModel.FK_AmenitiesOrder_Amenities">
+            <End Role="Amenities" EntitySet="Amenities" />
+            <End Role="AmenitiesOrder" EntitySet="AmenitiesOrder" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AmenitiesOrder_Order" Association="autoServiceModel.FK_AmenitiesOrder_Order">
+            <End Role="Order" EntitySet="Order" />
+            <End Role="AmenitiesOrder" EntitySet="AmenitiesOrder" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Order_Client" Association="autoServiceModel.FK_Order_Client">
+            <End Role="Client" EntitySet="Client" />
+            <End Role="Order" EntitySet="Order" />
+          </AssociationSet>
+          <AssociationSet Name="FK_component_Order" Association="autoServiceModel.FK_component_Order">
+            <End Role="Order" EntitySet="Order" />
+            <End Role="component" EntitySet="component" />
+          </AssociationSet>
+          <AssociationSet Name="FK_component_Provider" Association="autoServiceModel.FK_component_Provider">
+            <End Role="Provider" EntitySet="Provider" />
+            <End Role="component" EntitySet="component" />
+          </AssociationSet>
+          <AssociationSet Name="FK_component_Type" Association="autoServiceModel.FK_component_Type">
+            <End Role="Type" EntitySet="Type" />
+            <End Role="component" EntitySet="component" />
+          </AssociationSet>
+          <AssociationSet Name="FK_component_Warehouse" Association="autoServiceModel.FK_component_Warehouse">
+            <End Role="Warehouse" EntitySet="Warehouse" />
+            <End Role="component" EntitySet="component" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Order_Manager" Association="autoServiceModel.FK_Order_Manager">
+            <End Role="Manager" EntitySet="Manager" />
+            <End Role="Order" EntitySet="Order" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Amenities">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Price" Type="Decimal" Nullable="false" Precision="10" Scale="2" />
+          <NavigationProperty Name="AmenitiesOrder" Relationship="autoServiceModel.FK_AmenitiesOrder_Amenities" FromRole="Amenities" ToRole="AmenitiesOrder" />
+        </EntityType>
+        <EntityType Name="AmenitiesOrder">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Amenities" Type="Int64" Nullable="false" />
+          <Property Name="Order" Type="Int64" Nullable="false" />
+          <NavigationProperty Name="Amenities1" Relationship="autoServiceModel.FK_AmenitiesOrder_Amenities" FromRole="AmenitiesOrder" ToRole="Amenities" />
+          <NavigationProperty Name="Order1" Relationship="autoServiceModel.FK_AmenitiesOrder_Order" FromRole="AmenitiesOrder" ToRole="Order" />
+        </EntityType>
+        <EntityType Name="Client">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FirstName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="LastName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Number" Type="String" Nullable="false" MaxLength="12" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Order" Relationship="autoServiceModel.FK_Order_Client" FromRole="Client" ToRole="Order" />
+        </EntityType>
+        <EntityType Name="component">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Type" Type="Int64" Nullable="false" />
+          <Property Name="Warehouse" Type="Int64" Nullable="false" />
+          <Property Name="DeliveryDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Provider" Type="Int64" Nullable="false" />
+          <Property Name="Order" Type="Int64" />
+          <NavigationProperty Name="Order1" Relationship="autoServiceModel.FK_component_Order" FromRole="component" ToRole="Order" />
+          <NavigationProperty Name="Provider1" Relationship="autoServiceModel.FK_component_Provider" FromRole="component" ToRole="Provider" />
+          <NavigationProperty Name="Type1" Relationship="autoServiceModel.FK_component_Type" FromRole="component" ToRole="Type" />
+          <NavigationProperty Name="Warehouse1" Relationship="autoServiceModel.FK_component_Warehouse" FromRole="component" ToRole="Warehouse" />
+        </EntityType>
+        <EntityType Name="Manager">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FirstName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="LastName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Phono" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="DateOfBirth" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Login" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Password" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Order" Relationship="autoServiceModel.FK_Order_Manager" FromRole="Manager" ToRole="Order" />
+        </EntityType>
+        <EntityType Name="Order">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Client" Type="Int64" Nullable="false" />
+          <Property Name="Car" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Comment" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Manager" Type="Int64" Nullable="false" />
+          <NavigationProperty Name="AmenitiesOrder" Relationship="autoServiceModel.FK_AmenitiesOrder_Order" FromRole="Order" ToRole="AmenitiesOrder" />
+          <NavigationProperty Name="Client1" Relationship="autoServiceModel.FK_Order_Client" FromRole="Order" ToRole="Client" />
+          <NavigationProperty Name="component" Relationship="autoServiceModel.FK_component_Order" FromRole="Order" ToRole="component" />
+          <NavigationProperty Name="Manager1" Relationship="autoServiceModel.FK_Order_Manager" FromRole="Order" ToRole="Manager" />
+        </EntityType>
+        <EntityType Name="Provider">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Adress" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="component" Relationship="autoServiceModel.FK_component_Provider" FromRole="Provider" ToRole="component" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="Type">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Price" Type="Decimal" Precision="10" Scale="2" />
+          <NavigationProperty Name="component" Relationship="autoServiceModel.FK_component_Type" FromRole="Type" ToRole="component" />
+        </EntityType>
+        <EntityType Name="Warehouse">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Address" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="component" Relationship="autoServiceModel.FK_component_Warehouse" FromRole="Warehouse" ToRole="component" />
+        </EntityType>
+        <Association Name="FK_AmenitiesOrder_Amenities">
+          <End Type="autoServiceModel.Amenities" Role="Amenities" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="autoServiceModel.AmenitiesOrder" Role="AmenitiesOrder" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Amenities">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AmenitiesOrder">
+              <PropertyRef Name="Amenities" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AmenitiesOrder_Order">
+          <End Type="autoServiceModel.Order" Role="Order" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="autoServiceModel.AmenitiesOrder" Role="AmenitiesOrder" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Order">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AmenitiesOrder">
+              <PropertyRef Name="Order" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Order_Client">
+          <End Type="autoServiceModel.Client" Role="Client" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="autoServiceModel.Order" Role="Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Client">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Order">
+              <PropertyRef Name="Client" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_component_Order">
+          <End Type="autoServiceModel.Order" Role="Order" Multiplicity="0..1" />
+          <End Type="autoServiceModel.component" Role="component" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Order">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="component">
+              <PropertyRef Name="Order" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_component_Provider">
+          <End Type="autoServiceModel.Provider" Role="Provider" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="autoServiceModel.component" Role="component" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Provider">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="component">
+              <PropertyRef Name="Provider" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_component_Type">
+          <End Type="autoServiceModel.Type" Role="Type" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="autoServiceModel.component" Role="component" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Type">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="component">
+              <PropertyRef Name="Type" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_component_Warehouse">
+          <End Type="autoServiceModel.Warehouse" Role="Warehouse" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="autoServiceModel.component" Role="component" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Warehouse">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="component">
+              <PropertyRef Name="Warehouse" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Order_Manager">
+          <End Type="autoServiceModel.Manager" Role="Manager" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="autoServiceModel.Order" Role="Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Manager">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Order">
+              <PropertyRef Name="Manager" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Хранилище autoServiceModelContainer" CdmEntityContainer="autoServiceEntities">
+          <EntitySetMapping Name="Amenities">
+            <EntityTypeMapping TypeName="autoServiceModel.Amenities">
+              <MappingFragment StoreEntitySet="Amenities">
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AmenitiesOrder">
+            <EntityTypeMapping TypeName="autoServiceModel.AmenitiesOrder">
+              <MappingFragment StoreEntitySet="AmenitiesOrder">
+                <ScalarProperty Name="Order" ColumnName="Order" />
+                <ScalarProperty Name="Amenities" ColumnName="Amenities" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Client">
+            <EntityTypeMapping TypeName="autoServiceModel.Client">
+              <MappingFragment StoreEntitySet="Client">
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Number" ColumnName="Number" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="component">
+            <EntityTypeMapping TypeName="autoServiceModel.component">
+              <MappingFragment StoreEntitySet="component">
+                <ScalarProperty Name="Order" ColumnName="Order" />
+                <ScalarProperty Name="Provider" ColumnName="Provider" />
+                <ScalarProperty Name="DeliveryDate" ColumnName="DeliveryDate" />
+                <ScalarProperty Name="Warehouse" ColumnName="Warehouse" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Manager">
+            <EntityTypeMapping TypeName="autoServiceModel.Manager">
+              <MappingFragment StoreEntitySet="Manager">
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Login" ColumnName="Login" />
+                <ScalarProperty Name="DateOfBirth" ColumnName="DateOfBirth" />
+                <ScalarProperty Name="Phono" ColumnName="Phono" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Order">
+            <EntityTypeMapping TypeName="autoServiceModel.Order">
+              <MappingFragment StoreEntitySet="Order">
+                <ScalarProperty Name="Manager" ColumnName="Manager" />
+                <ScalarProperty Name="Comment" ColumnName="Comment" />
+                <ScalarProperty Name="Car" ColumnName="Car" />
+                <ScalarProperty Name="Client" ColumnName="Client" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Provider">
+            <EntityTypeMapping TypeName="autoServiceModel.Provider">
+              <MappingFragment StoreEntitySet="Provider">
+                <ScalarProperty Name="Adress" ColumnName="Adress" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="autoServiceModel.sysdiagrams">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="definition" ColumnName="definition" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Type">
+            <EntityTypeMapping TypeName="autoServiceModel.Type">
+              <MappingFragment StoreEntitySet="Type">
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Warehouse">
+            <EntityTypeMapping TypeName="autoServiceModel.Warehouse">
+              <MappingFragment StoreEntitySet="Warehouse">
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Нет" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

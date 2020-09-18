@@ -1,0 +1,37 @@
+﻿<Window x:Class="autoService.Auth"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:autoService"
+        mc:Ignorable="d"
+        Title="Авторизация" Height="300" Width="250" Background="Black">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="0.3*"/>
+            <RowDefinition/>
+            <RowDefinition Height="0.4*"/>
+        </Grid.RowDefinitions>
+        <Label>Авторизация</Label>
+        <Grid Grid.Row="1">
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <TextBlock>Логин</TextBlock>
+            <TextBox Grid.Row="1" Name="Login" MaxLength="50"></TextBox>
+            <TextBlock Grid.Row="2">Пароль</TextBlock>
+            <PasswordBox Grid.Row="3" Name="Password" MaxLength="50"></PasswordBox>
+        </Grid>
+        <Grid Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Button Click="Enter">Войти</Button>
+            <Button Grid.Column="1" Click="Close" >Закрыть</Button>
+        </Grid>
+    </Grid>
+</Window>

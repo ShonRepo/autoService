@@ -1,0 +1,76 @@
+﻿<Window x:Class="autoService.Orders.New"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:autoService.Orders"
+        mc:Ignorable="d"
+        Title="Новый заказ" Height="500" Width="400" ResizeMode="NoResize" Background="Black">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="0.5*"/>
+            <RowDefinition Height="4*"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Label>Заказ</Label>
+        <ScrollViewer Grid.Row="1">
+            <StackPanel>
+                <TextBlock>Стоимость</TextBlock>
+                <TextBox x:Name="Price" IsReadOnly="True"></TextBox>
+                <TextBlock>Клиент</TextBlock>
+                <ComboBox x:Name="Clients" DisplayMemberPath="FullName"/>
+                <TextBlock>Автомобиль</TextBlock>
+                <TextBox x:Name="Car" ></TextBox>
+                <TextBlock>Коментарий</TextBlock>
+                <TextBox x:Name="Comment"></TextBox>
+                <TextBlock>Услуги</TextBlock>
+                <ListBox x:Name="Amenities" Height="150">
+                    <ListBox.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <WrapPanel IsItemsHost="True" Width="360"/>
+                        </ItemsPanelTemplate>
+                    </ListBox.ItemsPanel>
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <Border Background="Gray" CornerRadius="5" Padding="2">
+                                <CheckBox Content="{Binding Amenities.Name}"  IsChecked="{Binding IsSelect}" Click="Check"/>
+                            </Border>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+                <TextBlock>Детали</TextBlock>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="3*"/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <ComboBox Name="Component" DisplayMemberPath="Name"/>
+                    <Button Grid.Column="1" Click="Add" >Добавить</Button>
+                </Grid>
+                <DataGrid Width="370" Height="200" AutoGenerateColumns="False" IsReadOnly="True" Name="tableComponent">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Тип" Width="*" Binding="{Binding Type1.Name}"/>
+                        <DataGridTextColumn Header="Поставка" Width="*" Binding="{Binding DeliveryDate}"/>
+                        <DataGridTextColumn Header="Поставщик" Width="*" Binding="{Binding Provider1.Name}"/>
+                        <DataGridTemplateColumn>
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Button Click="Remove">x</Button>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </StackPanel>
+        </ScrollViewer>
+        <Grid Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Button Grid.Column="0" Click="Create" IsDefault="True" >Создать</Button>
+            <Button Grid.Column="1" IsCancel="True" >Закрыть</Button>
+        </Grid>
+    </Grid>
+</Window>
+

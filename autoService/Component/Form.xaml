@@ -1,0 +1,33 @@
+﻿<Window x:Class="autoService.Component.Form"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:autoService.Component"
+        mc:Ignorable="d"
+        Title="Деталь" Height="450" Width="400" Background="Black">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="0.5*"/>
+            <RowDefinition Height="3*"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Label>Деталь</Label>
+        <StackPanel Grid.Row="1">
+            <TextBlock>Тип</TextBlock>
+            <ComboBox Name="Type" DisplayMemberPath="Name"></ComboBox>
+            <TextBlock>Склад</TextBlock>
+            <ComboBox Name="Warehouse" DisplayMemberPath="Address"></ComboBox>
+            <TextBlock>Поставщик</TextBlock>
+            <ComboBox Name="Provider" DisplayMemberPath="Name"></ComboBox>
+        </StackPanel>
+        <Grid Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Button Click="Add" >Создать</Button>
+            <Button Grid.Column="1" IsCancel="True">Отмена</Button>
+        </Grid>
+    </Grid>
+</Window>
